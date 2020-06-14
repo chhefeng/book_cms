@@ -1,10 +1,11 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
-<head>
+<head th:replace="_fragments :: head(~{::title})">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
-    <link rel="stylesheet" href="/me.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.2.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/me.css" th:href="@{/css/me.css}">
 
     <title>home</title>
 
@@ -13,12 +14,11 @@
 <body>
 
 <!-- navigation -->
-<nav class="ui attached segment m-padded-tb-mini">
+<nav th:replace="_fragments :: menu(1)" class="ui attached segment m-padded-tb-mini">
     <div class="ui m-container">
         <div class="ui secondary menu">
-            <div>
-                <h3 class="ui item teal header">PLMS</h3>
-            </div>
+
+            <h3 class="ui item teal header">PLMS</h3>
 
             <div class="ui secondary menu lr-space">
                 <div class="header item">
@@ -64,9 +64,10 @@
 
                     </div>
                     <div class="six wide field">
-                        <div class="ui icon small input"">
-                        <input type="text" placeholder="Subject">
-                        <i class="dropdown link icon"></i>
+                        <div class="ui icon small input">
+                            <input type="text" placeholder="Subject">
+                            <i class="dropdown link icon"></i>
+                        </div>
                     </div>
                 </div>
                 <div class="three wide field">
@@ -86,34 +87,34 @@
 </div>
 
 <div class="ui attached segment">
-    <table class="ui very basic celled table">
+    <table th:fragment="bookList" class="ui very basic celled table">
         <thead>
         <tr>
             <th>Title</th>
-            <th>Auther</th>
+            <th>Author</th>
             <th>Subject</th>
             <th>ISBN</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td data-label="Name">Finite Elmente Methode:Linar dynamics and statics</td>
-            <td data-label="Age">24</td>
-            <td data-label="Job">dynamics and statics</td>
-            <td data-label="Job">dynamics and statics</td>
-        </tr>
-        <tr>
-            <td data-label="Name">Jill</td>
-            <td data-label="Age">26</td>
-            <td data-label="Job">Engineer</td>
-            <td data-label="Job">Engineer</td>
-        </tr>
-        <tr>
-            <td data-label="Name">Elyse</td>
-            <td data-label="Age">24</td>
-            <td data-label="Job">Designer</td>
-            <td data-label="Job">Engineer</td>
-        </tr>
+            <tr th:each="blog, iterStat: ${page.content}">
+                <td data-label="Name">Finite Elmente Methode:Linar dynamics and statics</td>
+                <td data-label="Age">24</td>
+                <td data-label="Job">dynamics and statics</td>
+                <td data-label="Job">dynamics and statics</td>
+            </tr>
+            <tr>
+                <td data-label="Name">Jill</td>
+                <td data-label="Age">26</td>
+                <td data-label="Job">Engineer</td>
+                <td data-label="Job">Engineer</td>
+            </tr>
+            <tr>
+                <td data-label="Name">Elyse</td>
+                <td data-label="Age">24</td>
+                <td data-label="Job">Designer</td>
+                <td data-label="Job">Engineer</td>
+            </tr>
         </tbody>
         <tfoot>
         <tr>
