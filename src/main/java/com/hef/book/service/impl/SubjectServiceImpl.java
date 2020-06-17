@@ -7,9 +7,11 @@ import com.hef.book.entity.Subject;
 import com.hef.book.service.SubjectService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class SubjectServiceImpl implements SubjectService {
 
     private SubjectRepository subjectRepository;

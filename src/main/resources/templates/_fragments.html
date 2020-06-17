@@ -2,20 +2,21 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:fragment="head(title)">
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:replace="${title}">Title</title>
     <link href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" rel="stylesheet">
     <link href="../static/css/me.css" rel="stylesheet" th:href="@{/css/me.css}">
-
 </head>
+
 <body>
 <nav th:fragment="menu(n)" class="ui attached segment m-padded-tb-mini">
     <div class="ui m-container">
         <div class="ui secondary menu">
             <h3 class="ui item teal header">LMS</h3>
             <div class="ui secondary menu lr-space">
-                <a href="#" th:href="@{/books}" th:classappend="${n==1} ? 'active'" class="header item">Books</a>
+                <a href="#" th:href="@{/book}" th:classappend="${n==1} ? 'active'" class="header item">Books</a>
                 <a class="item" th:href="@{/subject}" th:classappend="${n==1} ? 'active'">Subject</a>
-                <a class="item" th:href="@{/tags}" th:classappend="${n==1} ? 'active'">Tags</a>
+                <a class="item" th:href="@{/tag}" th:classappend="${n==1} ? 'active'">Tags</a>
                 <a class="item" th:href="@{/author}" th:classappend="${n==1} ? 'active'">Author</a>
             </div>
 

@@ -1,0 +1,242 @@
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8" th:replace="_fragments :: head(~{::title})">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/me.css" >
+    <title>new book</title>
+
+</head>
+
+<body>
+
+    <!-- navigation -->
+    <nav th:replace="_fragments :: menu(1)" class="ui attached segment m-padded-tb-mini">
+        <div class="ui m-container">
+            <div class="ui secondary menu">
+                <div>
+                    <h3 class="ui item teal header">PLMS</h3>
+                </div>
+
+                <div class="ui secondary menu lr-space">
+                    <div class="header item">
+                        Books
+                    </div>
+
+                    <a class="item">
+                        Subject
+                    </a>
+                    <a class="item">
+                        Tags
+                    </a>
+                    <a class="item">
+                        Author
+                    </a>
+                </div>
+
+                <div class="right menu">
+                    <div class="item">
+                        <a href="#">Log out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </nav>
+    <br>
+    <br>
+
+    <!-- content -->
+
+    <div class="ui m-container-extiny">
+        <div class="ui segment">
+            
+            <form id="book-form" class="ui mini form" th:object="${book}" th:action="@{/book/add}" method="post">
+                <div class="two fields">
+                    <div class="field">
+                        <label>Title</label>
+                        <input class="small" th:field="*{title}" type="text" name="title" placeholder="Title" required>
+                    </div>
+                    <div class="field">
+                        <label>Picture</label>
+                        <input class="small" th:field="*{picture}" type="text" name="picture" placeholder="Picture">
+                    </div>
+                </div>
+
+
+                <!--subtitle-->
+                <div class="field">
+                  <label>Subtitle</label>
+                  <input type="text" th:field="*{subtitle}" name="last-name" placeholder="Last Name">
+                </div>
+
+                <!-- subject and tags -->
+                <div class="two fields">
+                    <div class="field">
+                        <label>Subject</label>
+                        <div class="ui fluid selection dropdown">
+                            <input th:value="*{subject}!=null ? *{subject.id}" type="hidden" name="subject.id">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">Subject</div>
+                            <div class="menu dropdown">
+                                <div th:each="subject : ${subjects}"
+                                     th:data-value="${subject.id}"
+                                     th:text="${subject.name}" class="item">
+                                </div>
+                                <div class="item" data-value="1">Java</div>
+                                <div class="item" data-value="2">Javascript</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label>Tags</label>
+                        <div class="ui fluid selection multiple search dropdown">
+                            <input th:field="*{tags}" type="hidden" name="tags">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">Tags</div>
+                            <div class="menu">
+                                <div class="item" th:each="tag : ${tags}"
+                                        th:data-value="${tag.id}"
+                                        th:text="${tag.name}">tag
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="fields">
+                    <div class="six wide field">
+                        <label>First Name</label>
+                        <input th:each="author, i : ${book.authors}"
+                               th:field="*{authors[__${i.index}__].firstName}" type="text" placeholder="First Name" name="firstName">
+                    </div>
+                    <div class="six wide field">
+                        <label>Last Name</label>
+                        <input th:each="author, i : ${book.authors}"
+                               th:field="*{authors[__${i.index}__].lastName}" type="text" placeholder="Last Name" name="lastName">
+                    </div>
+                    <div class="four wide field" style="align-self: flex-end !important;">
+                        <div class="ui compact right aligned fluid blue button">
+                            <input type="hidden" name="addForm" >
+                            <i class="add icon"></i>Add Authors
+                        </div>
+                    </div>
+                </div>
+
+
+  <!--              <div class="two fields">
+class="ui mini button"
+     <input name="addAuthors" value="redirect" id="redirect" class="ui mini button" type="submit">
+
+                    <div class="field">
+                        <label>Author</label>
+                        <div class="ui small fluid button m-padded-lr-tiny">
+                            <a class="show-modal">
+                                <i class="add icon"></i>Add Authors
+                            </a>
+                        </div>
+                    </div>
+
+                </div>-->
+
+                <div class="two fields">
+                    <div class="field">
+                        <label>Published</label>
+                        <input type="text" name="Published" placeholder="Published">
+                    </div>
+                    <div class="field">
+                        <label>ISBN</label>
+                        <input type="text" name="isbn" placeholder="ISBN">
+                    </div>
+                </div>
+                
+                <div class="field">
+                    <label>Text</label>
+                    <textarea></textarea>
+                </div>
+
+
+
+
+
+
+
+                <div class="ui right aligned container">
+                    <input name="save" value="save" id="save" class="ui blue button" type="submit">
+                </div>
+                
+              </form>
+
+        </div>
+    </div>
+
+
+
+
+
+    <br>
+    <br>
+
+    <!-- script -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+
+
+
+    <!-- modal and form for new authors -->
+    <script>
+        $(".toggle").click(function () {
+            $(".m-item").toggleClass("m-mobile-hide");
+        });
+
+        $('.ui.dropdown').dropdown({
+            on:'hover'
+        });
+        $('.ui.dropdown')
+            .dropdown({
+                allowAdditions: true
+            });
+
+        /**
+         * 笔记:
+         *  1. 实现thymeleaf, 动态表格传递
+         *  2. 为什么 e.preventDefault(); 阻止了，input submit 提交自身属性值， 这是一个坑。
+         *
+         * */
+
+ /*       data = {};
+        $("#save-modal-form").on("click", function(e){
+            e.preventDefault();
+            $('.ui.modal')
+                .modal('hide');
+            // prevent de default action, which is to submit
+            // save your value where you want
+            // data.select = $("#save-modal-form .field").value();
+            // or call the save function here
+            // save();
+            // $(this).prev().click();
+        });*/
+
+ /*  $(document).ready(function () {
+
+   $("#save").click(function (e) {
+         e.preventDefault();
+         $("#book-form").submit();
+     });
+
+     $("#redirect").click(function (e) {
+         e.preventDefault();
+         $("#book-form").submit();
+     });
+*/
+
+    </script>
+
+
+
+</body>
+
+</html>

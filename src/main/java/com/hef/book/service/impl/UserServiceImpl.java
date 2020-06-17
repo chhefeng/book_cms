@@ -22,4 +22,9 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByUsernameAndPassword(username, password);
         return user;
     }
+
+    @Override
+    public User saveUser(User user) {
+        return userRepository.save(user);
+    }
 }

@@ -16,4 +16,7 @@ public interface TagService {
 
     void deleteTag(Long id);
 
+    // methods
+    List<Tag> findTags(String ids);
+
 }
