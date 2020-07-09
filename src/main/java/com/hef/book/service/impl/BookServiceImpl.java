@@ -3,12 +3,14 @@ package com.hef.book.service.impl;
 import com.hef.book.dao.BookRepository;
 import com.hef.book.entity.Book;
 import com.hef.book.service.BookService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -31,13 +33,17 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional
     public Book saveBook(Book book) {
         return bookRepository.save(book);
     }
 
     @Override
+    @Transactional
     public Book updateBook(Book book) {
-        return null;
+        Book bookOld = bookRepository.findById(book.getId()).get();
+        BeanUtils.copyProperties(book, bookOld);
+        return bookRepository.save(bookOld);
     }
 
     @Override

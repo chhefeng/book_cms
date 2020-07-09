@@ -95,7 +95,9 @@
             </thead>
             <tbody>
             <tr th:each="book, iterStat: ${page.content}">
-                <td th:text="${book.title}" data-label="title">Finite Elmente Methode:Linar dynamics and statics</td>
+                <td data-label="title">
+                    <a th:href="@{/book/{id}(id=${book.id})}"><span th:text="${book.title}">Finite Elmente Methode:Linar dynamics and statics</span></a>
+                </td>
                 <td data-label="author">
                         <span th:each="author : ${book.authors}"
                               th:text="${author.lastName} + ', ' + ${author.firstName} + '; '">
