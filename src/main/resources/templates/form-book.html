@@ -52,7 +52,7 @@
     <div class="ui m-container-extiny">
         <div class="ui segment">
             
-            <form id="book-form" class="ui mini form" th:object="${book}" th:action="@{/book/add}" method="post">
+            <form id="book-form" class="ui mini form" th:object="${book}" th:action="@{/lms/book/add}" method="post">
                 <div class="two fields">
                     <div class="field">
                         <label>Title</label>
@@ -76,7 +76,7 @@
                     <div class="field">
                         <label>Subject</label>
                         <div class="ui fluid selection dropdown">
-                            <input th:value="*{subject}!=null ? *{subject.id}" type="hidden" name="subject.id">
+                            <input th:field="*{subject.id}" type="hidden" name="subject.id">
                             <i class="dropdown icon"></i>
                             <div class="default text">Subject</div>
                             <div class="menu dropdown">

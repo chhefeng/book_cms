@@ -9,6 +9,8 @@ import com.hef.book.service.BookService;
 import com.hef.book.service.SubjectService;
 import com.hef.book.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -22,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/book")
+@RequestMapping("/lms/book")
 public class BookController {
 
     private static final String PATH_LIST = "/book/list";
@@ -44,49 +46,84 @@ public class BookController {
         this.subjectService = subjectService;
     }
 
+    /**
+     * get all books
+     * @param pageable
+     * @param model
+     * @return
+     */
     @GetMapping({"/","","/list"})
     public String list(@PageableDefault(size = 8) Pageable pageable, Model model) {
-            model.addAttribute("subject", subjectService.findAll());
-            model.addAttribute("page", bookService.findAll(pageable));
-            return "books";
+        model.addAttribute("subject", subjectService.findAll());
+        model.addAttribute("page", bookService.findAll(pageable));
+        return "books";
     }
 
+    @GetMapping("/{id}")
+    public String getOne(@PathVariable Long id, Model model){
+        model.addAttribute("book", bookService.getOne(id));
+        return "details";
+    }
+
+    /**
+     * add new book
+     * @param book
+     * @param model
+     * @return
+     */
     @GetMapping("/add")
     public String showForm(@ModelAttribute Book book, Model model){
-        //List<Author> authors = new ArrayList<>();
-        //model.addAttribute("book", new Book());
-        //model.addAttribute("authors", authors);
         book.getAuthors().add(new Author());
         model.addAttribute("tags", tagService.findAll());
         model.addAttribute("subjects", subjectService.findAll());
         return "form-book";
     }
 
-    @PostMapping(params="addAuthors", value = "/add")
+    /**
+     * if a book has more than one author,
+     * it is possible to add author form dynamically
+     * @param book
+     * @return
+     */
+    @PostMapping(params="addForm", value = "/add")
     public String addAuthors(Book book){
         //model.addAttribute("authors", authors);
         book.getAuthors().add(new Author());
         return "form-book";
     }
 
+    /**
+     * save book
+     * @param book
+     * @param attributes
+     * @param session
+     * @return
+     */
     @PostMapping(params="save", value = "/add")
     public String postForm(Book book, RedirectAttributes attributes, HttpSession session) {
-        // book.setUser((User) session.getAttribute("user"));
+        book.setUser((User) session.getAttribute("user"));
         System.out.println(book);
-        Book book1;
+
         if (book.getId() == null) {
-            book1 = bookService.saveBook(book);
+            bookService.saveBook(book);
         } else {
-            book1 = bookService.updateBook(book);
+            bookService.updateBook(book);
         }
         return REDIRECT_LIST;
-
     }
 
+    /**
+     * search book
+     * @param pageable
+     * @param book
+     * @param model
+     * @return
+     */
     @PostMapping("/search")
     public String search(@PageableDefault(size = 8) Pageable pageable, Book book, Model model) {
         // code goes here
         return "index";
     }
+
 
 }

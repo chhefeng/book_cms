@@ -1,4 +1,4 @@
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
@@ -62,48 +62,53 @@
         </div>
 
     </div>
-    <div class="ui segment">
+    <div class="ui segment" th:object="book">
 
-        <h2 class="ui header center aligned row">Fundamentals of finite element analysis</h2>
+        <h2 class="ui header center aligned row">
+            <span th:field="*{title}"></span>
+        </h2>
 
         <div class="ui clearing divider"></div>
 
         <div class="ui stackable grid">
             <div class="six wide column">
-                <img class="ui image" style="width: 200px; height: 300px;" src="https://hds.hebis.de/ubks/bookcover.php?isn=9781119260141&size=large">
+                <img class="ui image" style="width: 200px; height: 300px;" th:src="*{picture}">
 
             </div>
-            <div class="ten wide middle aligned column">
+            <div class="ten wide middle aligned column" >
                 <table class="ui very basic table">
                     <tbody class="top aligned row">
                     <tr>
-                        <td data-label="title"><h5>Title:</h5></td>
-                        <td data-label="Age">Fundamentals of finite element analysis : linear finite element analysis</td>
+                        <td label="title"><h5>Title:</h5></td>
+                        <td th:text="*{subtitle}">Fundamentals of finite element analysis : linear finite element analysis</td>
                     </tr>
                     <tr>
-                        <td data-label="author"><h5>Author:</h5></td>
-                        <td data-label="author">Koutromanos, Ioannis</td>
-                    </tr>
-                    <tr>
-                        <td data-label="Name"><h5>Collaborator:</h5></td>
-                        <td data-label="Age">
-                            McClure, James; Roy, Christopher J.</td>
+                        <td label="author"><h5>Author:</h5></td>
+                        <td >
+                            <span th:each="author : ${book.authors}" th:text="${author.lastName} + ', ' + ${author.firstName} + '; '">
+                            </span>
+                        </td>
                     </tr>
                     <tr>
                         <td data-label="Name"><h5>Published:</h5></td>
-                        <td data-label="Age">Newark : Wiley, [2018]</td>
+                        <td th:text="*{published}">Newark : Wiley, [2018]</td>
                     </tr>
                     <tr>
                         <td data-label="Name"><h5>ISBN:</h5></td>
-                        <td data-label="Age">9781119260141</td>
+                        <td data-label="Age"><span th:field="*{book.isbn}"></span></td>
                     </tr>
                     <tr>
                         <td data-label="Name"><h5>Subject:</h5></td>
-                        <td data-label="Age">Solid Mechanics</td>
+                        <td >
+                            <a href="">
+                                <span th:field="*{subject}">Solid Mechanics</span>
+                            </a>
+                        </td>
                     </tr>
                     <tr>
-                        <td data-label="Name"><h5>Tags:</h5></td>
-                        <td data-label="Age">Finite Element Analysis, Mechanics, Mathematics
+                        <td><h5>Tags:</h5></td>
+                        <td >
+                            <span th:each="tag : ${book.tags}" th:text="tag.name">Finite Element Analysis, Mechanics, Mathematics</span>
                         </td>
                     </tr>
                     </tbody>

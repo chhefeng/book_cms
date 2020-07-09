@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface BookService {
 
-    Book getBook(Long id);
+    Book getOne(Long id);
 
     Page<Book> findAll(Pageable pageable);
 

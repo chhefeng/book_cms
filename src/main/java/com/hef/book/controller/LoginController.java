@@ -23,7 +23,7 @@ public class LoginController {
         this.userService = userService;
     }
 
-    @GetMapping(value ={"/", "/admin","/login"})
+    @GetMapping(value ={"/","/login"})
     public String loginPage(){
         return "login";
     }
@@ -40,7 +40,7 @@ public class LoginController {
             return "index";
         } else {
             attributes.addFlashAttribute("message", "username or password is invalid");
-            return "redirect:/admin";
+            return "redirect:/login";
         }
     }
 
