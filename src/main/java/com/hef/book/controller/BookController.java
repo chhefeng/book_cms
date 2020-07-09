@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/lms/book")
+@RequestMapping("/book")
 public class BookController {
 
     private static final String PATH_LIST = "/book/list";
@@ -60,13 +60,27 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public String getOne(@PathVariable Long id, Model model){
+    public String getOne(@PathVariable long id, Model model){
         model.addAttribute("book", bookService.getOne(id));
         return "details";
     }
 
     /**
-     * add new book
+     * edit a exist book, find one, show form
+     * @param id
+     * @param model
+     * @return
+     */
+    @GetMapping("/{id}/edit")
+    public String editOne(@PathVariable long id, Model model){
+        model.addAttribute("book", bookService.getOne(id));
+        model.addAttribute("tags", tagService.findAll());
+        model.addAttribute("subjects", subjectService.findAll());
+        return "form-book";
+    }
+
+    /**
+     * show book form to add a new book or edit a exist book
      * @param book
      * @param model
      * @return
@@ -85,7 +99,7 @@ public class BookController {
      * @param book
      * @return
      */
-    @PostMapping(params="addForm", value = "/add")
+    @PostMapping("/add-author")
     public String addAuthors(Book book){
         //model.addAttribute("authors", authors);
         book.getAuthors().add(new Author());
@@ -99,7 +113,7 @@ public class BookController {
      * @param session
      * @return
      */
-    @PostMapping(params="save", value = "/add")
+    @PostMapping("/save-book")
     public String postForm(Book book, RedirectAttributes attributes, HttpSession session) {
         book.setUser((User) session.getAttribute("user"));
         System.out.println(book);

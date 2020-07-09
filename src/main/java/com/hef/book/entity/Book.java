@@ -19,23 +19,25 @@ public class Book {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST})
+    @ManyToOne
     private User user;
 
     private String title;
     private String Subtitle;
     private String picture;
     private String isbn;
+    @Basic(fetch = FetchType.LAZY)
+    @Lob
     private String description;
     private String published;
 
     @ManyToMany(cascade = {CascadeType.PERSIST})
     private List<Author> authors = new ArrayList<>();
 
-    @ManyToOne(cascade = {CascadeType.PERSIST})
+    @ManyToOne
     private Subject subject;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST})
+    @ManyToMany
     private List<Tag> tags = new ArrayList<>();
 
 

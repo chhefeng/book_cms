@@ -1,7 +1,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
-<head>
-    <meta charset="UTF-8" th:replace="_fragments :: head(~{::title})">
+<head th:replace="_fragments :: head(~{::title})">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
     <link rel="stylesheet" href="../static/css/me.css" >
@@ -49,10 +49,11 @@
 
     <!-- content -->
 
-    <div class="ui m-container-extiny">
+    <div class="ui m-container-mini">
         <div class="ui segment">
             
-            <form id="book-form" class="ui mini form" th:object="${book}" th:action="@{/lms/book/add}" method="post">
+            <form id="book-form" class="ui mini form" th:object="${book}" action="/book/add" method="post">
+                <input type="hidden" th:field="*{id}">
                 <div class="two fields">
                     <div class="field">
                         <label>Title</label>
@@ -76,7 +77,7 @@
                     <div class="field">
                         <label>Subject</label>
                         <div class="ui fluid selection dropdown">
-                            <input th:field="*{subject.id}" type="hidden" name="subject.id">
+                            <input th:field="*{subject.id}" type="hidden" name="subject.name">
                             <i class="dropdown icon"></i>
                             <div class="default text">Subject</div>
                             <div class="menu dropdown">
@@ -93,7 +94,7 @@
                     <div class="field">
                         <label>Tags</label>
                         <div class="ui fluid selection multiple search dropdown">
-                            <input th:field="*{tags}" type="hidden" name="tags">
+                            <input th:field="*{tags}" type="hidden">
                             <i class="dropdown icon"></i>
                             <div class="default text">Tags</div>
                             <div class="menu">
@@ -108,54 +109,40 @@
                 </div>
 
                 <div class="fields">
-                    <div class="six wide field">
+                    <div class="six wide padded field">
                         <label>First Name</label>
-                        <input th:each="author, i : ${book.authors}"
-                               th:field="*{authors[__${i.index}__].firstName}" type="text" placeholder="First Name" name="firstName">
+                        <input th:each="author, i : ${book.authors}" style="margin-bottom: 10px;"
+                               th:field="*{authors[__${i.index}__].firstName}"
+                               type="text" placeholder="First Name" name="firstName">
                     </div>
                     <div class="six wide field">
                         <label>Last Name</label>
-                        <input th:each="author, i : ${book.authors}"
+                        <input th:each="author, i : ${book.authors}" style="margin-bottom: 10px;"
                                th:field="*{authors[__${i.index}__].lastName}" type="text" placeholder="Last Name" name="lastName">
                     </div>
                     <div class="four wide field" style="align-self: flex-end !important;">
-                        <div class="ui compact right aligned fluid blue button">
-                            <input type="hidden" name="addForm" >
+                        <div onclick="addAuthor(this)" class="ui compact right aligned fluid blue button" style="margin-bottom: 10px;">
+                            <input id="add-author" type="hidden" name="addForm" >
                             <i class="add icon"></i>Add Authors
                         </div>
                     </div>
                 </div>
 
 
-  <!--              <div class="two fields">
-class="ui mini button"
-     <input name="addAuthors" value="redirect" id="redirect" class="ui mini button" type="submit">
-
-                    <div class="field">
-                        <label>Author</label>
-                        <div class="ui small fluid button m-padded-lr-tiny">
-                            <a class="show-modal">
-                                <i class="add icon"></i>Add Authors
-                            </a>
-                        </div>
-                    </div>
-
-                </div>-->
-
                 <div class="two fields">
                     <div class="field">
                         <label>Published</label>
-                        <input type="text" name="Published" placeholder="Published">
+                        <input th:field="*{published}" type="text" name="Published" placeholder="Published">
                     </div>
                     <div class="field">
                         <label>ISBN</label>
-                        <input type="text" name="isbn" placeholder="ISBN">
+                        <input th:field="*{isbn}" type="text" name="isbn" placeholder="ISBN">
                     </div>
                 </div>
                 
                 <div class="field">
                     <label>Text</label>
-                    <textarea></textarea>
+                    <textarea th:field="*{description}"></textarea>
                 </div>
 
 
@@ -164,8 +151,8 @@ class="ui mini button"
 
 
 
-                <div class="ui right aligned container">
-                    <input name="save" value="save" id="save" class="ui blue button" type="submit">
+                <div onclick="saveBook(this)" class="ui right aligned container">
+                    <input name="save" value="save" id="save" class="ui blue button">
                 </div>
                 
               </form>
@@ -200,6 +187,13 @@ class="ui mini button"
                 allowAdditions: true
             });
 
+        function addAuthor(element){
+            $("#book-form").attr("action", "/book/add-author").submit();
+        }
+
+        function saveBook(element) {
+            $("#book-form").attr("action", "/book/save-book").submit();
+        }
         /**
          * 笔记:
          *  1. 实现thymeleaf, 动态表格传递

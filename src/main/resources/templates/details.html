@@ -1,6 +1,6 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
-<head>
+<head th:replace="_fragments :: head(~{::title})">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
@@ -50,19 +50,19 @@
 
 <!-- content -->
 
-<div class="ui m-container-extiny">
-    <div class="ui segement">
+<div class="ui m-container-mini" th:object="${book}">
+    <div class="ui segment">
         <div class="ui right aligned container">
-            <button class="ui compact blue button">
+            <a th:href="@{/book/{id}/edit(id=${book.id})}" class="ui compact blue button">
                 Edit
-            </button>
-            <button class="ui compact blue button">
+            </a>
+            <a class="ui compact blue button">
                 Delete
-            </button>
+            </a>
         </div>
 
     </div>
-    <div class="ui segment" th:object="book">
+    <div class="ui segment">
 
         <h2 class="ui header center aligned row">
             <span th:field="*{title}"></span>
@@ -79,27 +79,27 @@
                 <table class="ui very basic table">
                     <tbody class="top aligned row">
                     <tr>
-                        <td label="title"><h5>Title:</h5></td>
+                        <td><h5>Title:</h5></td>
                         <td th:text="*{subtitle}">Fundamentals of finite element analysis : linear finite element analysis</td>
                     </tr>
                     <tr>
-                        <td label="author"><h5>Author:</h5></td>
-                        <td >
+                        <td><h5>Author:</h5></td>
+                        <td>
                             <span th:each="author : ${book.authors}" th:text="${author.lastName} + ', ' + ${author.firstName} + '; '">
                             </span>
                         </td>
                     </tr>
                     <tr>
-                        <td data-label="Name"><h5>Published:</h5></td>
+                        <td><h5>Published:</h5></td>
                         <td th:text="*{published}">Newark : Wiley, [2018]</td>
                     </tr>
                     <tr>
-                        <td data-label="Name"><h5>ISBN:</h5></td>
-                        <td data-label="Age"><span th:field="*{book.isbn}"></span></td>
+                        <td><h5>ISBN:</h5></td>
+                        <td><span th:text="*{isbn}"></span></td>
                     </tr>
                     <tr>
-                        <td data-label="Name"><h5>Subject:</h5></td>
-                        <td >
+                        <td><h5>Subject:</h5></td>
+                        <td>
                             <a href="">
                                 <span th:field="*{subject}">Solid Mechanics</span>
                             </a>
@@ -107,8 +107,11 @@
                     </tr>
                     <tr>
                         <td><h5>Tags:</h5></td>
-                        <td >
-                            <span th:each="tag : ${book.tags}" th:text="tag.name">Finite Element Analysis, Mechanics, Mathematics</span>
+                        <td>
+                            <a href="" th:each="tag : ${book.tags}">
+                                <span th:text="${tag.name}">Finite Element Analysis, Mechanics, Mathematics
+                                </span>
+                            </a>
                         </td>
                     </tr>
                     </tbody>
@@ -119,7 +122,7 @@
         <div class="ui clearing divider"></div>
 
         <h5>Summary:</h5>
-        <p class="m-text-thin">
+        <p class="m-text-thin" th:text="*{description}">
             An introductory textbook covering the fundamentals of linear finite element analysis (FEA). This book constitutes the first volume in a two-volume set that introduces readers to the theoretical foundations and the implementation of the finite element method (FEM). The first volume focuses on the use of the method for linear problems. A general procedure is presented for the finite element analysis (FEA) of a physical problem, where the goal is to specify the values of a field function. First, the strong form of the problem (governing differential equations and boundary conditions) is formulated. Subsequently, a weak form of the governing equations is established. Finally, a finite element approximation is introduced, transforming the weak form into a system of equations where the only unknowns are nodal values of the field function. The procedure is applied to one-dimensional elasticity and heat conduction, multi-dimensional steady-state scalar field problems (heat conduction, chemical diffusion, flow in porous media), multi-dimensional elasticity and structural mechanics (beams/shells), as well as time-dependent (dynamic) scalar field problems, elastodynamics and structural dynamics. Important concepts for finite element computations, such as isoparametric elements for multi-dimensional analysis and Gaussian quadrature for numerical evaluation of integrals, are presented and explained. Practical aspects of FEA and advanced topics, such as reduced integration procedures, mixed finite elements and verification and validation of the FEM are also discussed.
         </p>
 
