@@ -6,6 +6,8 @@ import com.hef.book.entity.Tag;
 import com.hef.book.service.TagService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -29,6 +31,11 @@ public class TagServiceImpl implements TagService {
     @Override
     public List<Tag> findAll() {
         return tagRepository.findAll();
+    }
+
+    @Override
+    public Page<Tag> findAll(Pageable pageable) {
+        return tagRepository.findAll(pageable);
     }
 
     @Override

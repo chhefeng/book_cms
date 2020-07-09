@@ -7,6 +7,8 @@ import com.hef.book.entity.Subject;
 import com.hef.book.service.SubjectService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,22 +34,25 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public Subject saveSubject(Subject subject) {
+    public Page<Subject> findAll(Pageable pageable) {
+        return subjectRepository.findAll(pageable);
+    }
+
+    @Override
+    public Subject save(Subject subject) {
         return subjectRepository.save(subject);
     }
 
     @Override
-    public Subject updateSubject(Long id, Subject subject) {
-        Subject subject1 = subjectRepository.getOne(id);
-        if (subject1 == null) {
-            throw new NotFoundException("The Subject does not exist");
-        }
-        BeanUtils.copyProperties(subject, subject1);
-        return subjectRepository.save(subject1);
+    public Subject update(Subject subject) {
+
+        Subject subjectOld = subjectRepository.getOne(subject.getId());
+        BeanUtils.copyProperties(subject, subjectOld);
+        return subjectRepository.save(subjectOld);
     }
 
     @Override
-    public void deleteSubject(Long id) {
+    public void delete(Long id) {
         subjectRepository.deleteById(id);
     }
 }

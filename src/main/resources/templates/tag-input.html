@@ -54,38 +54,22 @@
 
 
     <div class="ui attached segment">
-        <table th:fragment="bookList" class="ui very basic celled table">
-            <thead>
-            <tr>
-                <th>Number</th>
-                <th>Name</th>
-                <th>Edit</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="subject, iterStat: ${page.content}">
-                <td th:text="${iterStat.count}">1</td>
-                <td th:text="${subject.name}">Finite Elmente Methode:Linar dynamics and statics</td>
-                <td >
-                    <a th:href="@{/subject/{id}/edit(id=${subject.id})}" class="ui blue button">Edit</a>
-                    <a th:href="@{/subject/{id}/delete(id=${subject.id})}" class="ui blue button">Delete</a>
-                </td>
+        <form class="ui form" action="@{/tag/save}" th:object="${tag}">
+            <input type="hidden" th:field="*{id}">
 
-            </tr>
+            <div class="two fields">
+                <label>Name</label>
+                <div class="field"> <input type="text" th:field="*{name}">
+                </div>
+                <div class="field">
+                    <input class="ui blue button" type="submit" value="Save">
+                </div>
+
+            </div>
 
 
-            </tbody>
-            <tfoot>
-            <tr>
-                <th colspan="4" class="right aligned row">
-                    <div class="ui mini pagination menu m-margin-top">
-                        <a class="icon item">上一页</a>
-                        <a  class="icon item">下一页</a>
-                    </div>
-                </th>
-            </tr>
-            </tfoot>
-        </table>
+
+        </form>
     </div>
 
 </div>

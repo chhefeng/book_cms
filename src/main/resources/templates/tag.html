@@ -63,12 +63,12 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="subject, iterStat: ${page.content}">
+            <tr th:each="tag, iterStat: ${page.content}">
                 <td th:text="${iterStat.count}">1</td>
-                <td th:text="${subject.name}">Finite Elmente Methode:Linar dynamics and statics</td>
+                <td th:text="${tag.name}">Finite Elmente Methode:Linar dynamics and statics</td>
                 <td >
-                    <a th:href="@{/subject/{id}/edit(id=${subject.id})}" class="ui blue button">Edit</a>
-                    <a th:href="@{/subject/{id}/delete(id=${subject.id})}" class="ui blue button">Delete</a>
+                    <a th:href="@{/tag/{id}/edit(id=${tag.id})}" class="ui blue button">Edit</a>
+                    <a th:href="@{/tag/{id}/delete(id=${tag.id})}" class="ui blue button">Delete</a>
                 </td>
 
             </tr>
