@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/tag")
@@ -44,6 +45,13 @@ public class TagController {
         } else {
             tagService.update(tag);
         }
+        return "redirect:/tag/list";
+    }
+
+    @GetMapping("/{id}/delete")
+    public String delete(@PathVariable Long id, RedirectAttributes red){
+        tagService.delete(id);
+        red.addFlashAttribute("message", "successful");
         return "redirect:/tag/list";
     }
 

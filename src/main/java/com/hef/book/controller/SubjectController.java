@@ -31,6 +31,12 @@ public class SubjectController {
         return "subject";
     }
 
+    @GetMapping("/add")
+    public String add(Model model){
+        model.addAttribute("subject", new Subject());
+        return "subject-input";
+    }
+
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable Long id, Model model){
         model.addAttribute("subject", subjectService.getOne(id));
@@ -50,7 +56,13 @@ public class SubjectController {
             redirectAttributes.addFlashAttribute("message", "successful");
         }
         return "redirect:/subject/list";
+    }
 
+    @GetMapping("/{id}/delete")
+    public String delete(@PathVariable Long id, RedirectAttributes red){
+        subjectService.delete(id);
+        red.addFlashAttribute("message", "successful");
+        return "redirect:/subject/list";
     }
 
 

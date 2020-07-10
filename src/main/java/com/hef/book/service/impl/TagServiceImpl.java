@@ -4,11 +4,13 @@ import com.hef.book.NotFoundException;
 import com.hef.book.dao.TagRepository;
 import com.hef.book.entity.Tag;
 import com.hef.book.service.TagService;
+import com.hef.book.utils.HelpFunction;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +46,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
+    @Transactional
     public Tag update(Tag tag) {
         Tag tagOld = tagRepository.getOne(tag.getId());
         BeanUtils.copyProperties(tag, tagOld);
@@ -51,11 +54,12 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public void deleteTag(Long id) {
+    public void delete(Long id) {
         tagRepository.deleteById(id);
     }
 
     @Override
+    @Transactional
     public List<Tag> findAndSaveTags(String ids) {
         return tagRepository.findAllById(convertToList(ids));
     }
@@ -65,7 +69,7 @@ public class TagServiceImpl implements TagService {
         if(!"".equals(ids) && ids!=null){
             String[] idArray = ids.split(",");
             for (String s : idArray) {
-                if (isInteger(s)) {
+                if (HelpFunction.isInteger(s)) {
                     list.add(Long.valueOf(s));
                 } else {
                     Tag tag = new Tag();
@@ -78,28 +82,5 @@ public class TagServiceImpl implements TagService {
         return list;
     }
 
-    private static boolean isInteger(String str) {
-        if (str == null) {
-            return false;
-        }
-        int length = str.length();
-        if (length == 0) {
-            return false;
-        }
-        int i = 0;
-        if (str.charAt(0) == '-') {
-            if (length == 1) {
-                return false;
-            }
-            i = 1;
-        }
-        for (; i < length; i++) {
-            char c = str.charAt(i);
-            if (c < '0' || c > '9') {
-                return false;
-            }
-        }
-        return true;
-    }
 
 }

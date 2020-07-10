@@ -73,7 +73,10 @@ public class BookController {
      */
     @GetMapping("/{id}/edit")
     public String editOne(@PathVariable long id, Model model){
-        model.addAttribute("book", bookService.getOne(id));
+        Book book = bookService.getOne(id);
+        book.init();
+        model.addAttribute("book", book);
+        model.addAttribute("authors", authorService.findAll());
         model.addAttribute("tags", tagService.findAll());
         model.addAttribute("subjects", subjectService.findAll());
         return "form-book";
@@ -87,23 +90,12 @@ public class BookController {
      */
     @GetMapping("/add")
     public String showForm(@ModelAttribute Book book, Model model){
-        book.getAuthors().add(new Author());
+        model.addAttribute("authors", authorService.findAll());
         model.addAttribute("tags", tagService.findAll());
         model.addAttribute("subjects", subjectService.findAll());
         return "form-book";
     }
 
-    /**
-     * if a book has more than one author,
-     * it is possible to add author form dynamically
-     * @param book
-     * @return
-     */
-    @PostMapping("/add-author")
-    public String addAuthors(Book book){
-        book.getAuthors().add(new Author());
-        return "form-book";
-    }
 
     /**
      * save book
@@ -113,12 +105,22 @@ public class BookController {
      * @return
      */
     @PostMapping("/save-book")
-    public String postForm(@RequestParam String tagIds, Book book, RedirectAttributes attributes, HttpSession session) {
+    public String postForm(Book book, RedirectAttributes attributes, HttpSession session) {
         book.setUser((User) session.getAttribute("user"));
         System.out.println(book);
 
-        List<Tag> tags = tagService.findAndSaveTags(tagIds);
+        List<Tag> tags = tagService.findAndSaveTags(book.getTagIds());
         book.setTags(tags);
+
+        List<Author> authors = authorService.findAndSaveAuthors(book.getAuthorIds());
+        book.setAuthors(authors);
+
+        /**
+         * Determine if subject is null, if it is null, set to subject "other"
+         */
+        if (book.getSubject() == null){
+            book.setSubject(subjectService.getOne(3L));
+        }
 
         Book bookNew;
         if (book.getId() == null) {

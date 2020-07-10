@@ -21,6 +21,6 @@ public interface AuthorService {
 
     void delete(Long id);
 
-    Author findByFirstNameAndLastName(String firstName, String lastName);
+    List<Author> findAndSaveAuthors(String ids);
 
 }

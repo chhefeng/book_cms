@@ -20,7 +20,7 @@ public class Author {
     private String firstName;
     private String lastName;
 
-    private String name = firstName + " " + lastName;
+    private String name;
 
     @ToString.Exclude
     @ManyToMany(mappedBy = "authors")

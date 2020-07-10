@@ -64,7 +64,7 @@
             <tbody>
             <tr th:each="author, iterStat: ${page.content}">
                 <td th:text="${iterStat.count}">1</td>
-                <td><span th:text="${author.lastName}+ ', ' + ${author.firstName}"></span></td>
+                <td><span th:text="${author.name}"></span></td>
                 <td >
                     <a th:href="@{/author/{id}/edit(id=${author.id})}" class="ui blue button">Edit</a>
                     <a th:href="@{/author/{id}/delete(id=${author.id})}" class="ui blue button">Delete</a>

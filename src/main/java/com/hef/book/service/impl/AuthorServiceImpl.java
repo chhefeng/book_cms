@@ -2,8 +2,9 @@ package com.hef.book.service.impl;
 
 import com.hef.book.dao.AuthorRepository;
 import com.hef.book.entity.Author;
-import com.hef.book.entity.Tag;
+import com.hef.book.entity.Author;
 import com.hef.book.service.AuthorService;
+import com.hef.book.utils.HelpFunction;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -58,7 +59,28 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public Author findByFirstNameAndLastName(String firstName, String lastName) {
-        return authorRepository.findByFirstNameAndLastName(firstName, lastName);
+    @Transactional
+    public List<Author> findAndSaveAuthors(String ids) {
+        return authorRepository.findAllById(convertToList(ids));
     }
+
+
+    private List<Long> convertToList(String ids){
+        List<Long> list = new ArrayList<>();
+        if(!"".equals(ids) && ids!=null){
+            String[] idArray = ids.split(",");
+            for (String s : idArray) {
+                if (HelpFunction.isInteger(s)) {
+                    list.add(Long.valueOf(s));
+                } else {
+                    Author author = new Author();
+                    author.setName(s);
+                    author = this.save(author);
+                    list.add(author.getId());
+                }
+            }
+        }
+        return list;
+    }
+
 }

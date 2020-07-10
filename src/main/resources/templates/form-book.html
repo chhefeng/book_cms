@@ -72,7 +72,7 @@
                     <div class="field">
                         <label>Subject</label>
                         <div class="ui fluid selection dropdown">
-                            <input th:value="*{subject.id}" type="hidden" name="subject.name">
+                            <input th:field="*{subject.id}" type="hidden" name="subject.name">
                             <i class="dropdown icon"></i>
                             <div class="default text">Subject</div>
                             <div class="menu dropdown">
@@ -89,7 +89,7 @@
                     <div class="field">
                         <label>Tags</label>
                         <div class="ui fluid selection multiple search dropdown">
-                            <input name="tagIds" type="hidden">
+                            <input name="tagIds" type="hidden" th:value="*{tagIds}">
                             <i class="dropdown icon"></i>
                             <div class="default text">Tags</div>
                             <div class="menu">
@@ -103,22 +103,18 @@
 
                 </div>
 
-                <div class="fields">
-                    <div class="six wide padded field">
-                        <label>First Name</label>
-                        <input th:each="author, i : ${book.authors}" style="margin-bottom: 10px;"
-                               th:field="*{authors[__${i.index}__].firstName}"
-                               type="text" placeholder="First Name" name="firstName">
-                    </div>
-                    <div class="six wide field">
-                        <label>Last Name</label>
-                        <input th:each="author, i : ${book.authors}" style="margin-bottom: 10px;"
-                               th:field="*{authors[__${i.index}__].lastName}" type="text" placeholder="Last Name" name="lastName">
-                    </div>
-                    <div class="four wide field" style="align-self: flex-end !important;">
-                        <div onclick="addAuthor(this)" class="ui compact right aligned fluid blue button" style="margin-bottom: 10px;">
-                            <input id="add-author" type="hidden" name="addForm" >
-                            <i class="add icon"></i>Add Authors
+
+                <div class="field">
+                    <label>Add Authors</label>
+                    <div class="ui fluid selection multiple search dropdown">
+                        <input name="authorIds" type="hidden" th:value="*{authorIds}">
+                        <i class="dropdown icon"></i>
+                        <div class="default text">Author</div>
+                        <div class="menu">
+                            <div class="item" th:each="author : ${authors}"
+                                 th:data-value="${author.id}"
+                                 th:text="${author.name}">Author
+                            </div>
                         </div>
                     </div>
                 </div>

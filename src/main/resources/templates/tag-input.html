@@ -48,7 +48,7 @@
 
 
     <div class="ui attached segment">
-        <form class="ui form" th:action="@{/tag/save}" th:object="${tag}">
+        <form class="ui form" th:action="@{/tag/save}" method="POST" th:object="${tag}">
             <input type="hidden" th:field="*{id}">
 
             <div class="two fields">

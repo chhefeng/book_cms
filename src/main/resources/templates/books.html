@@ -106,7 +106,7 @@
                 </td>
                 <td data-label="author">
                         <span th:each="author : ${book.authors}"
-                              th:text="${author.lastName} + ', ' + ${author.firstName} + '; '">
+                              th:text="${author.name} + '; '">
                         </span>
                 </td>
                 <td th:text="${book.subject.name}" data-label="Job">dynamics and statics</td>

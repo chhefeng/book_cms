@@ -51,8 +51,12 @@
         <h3 th:text="${message}"></h3>
     </div>
 
+    <div class="ui small fluid button m-padded-lr-tiny">
+        <i class="add icon"></i><a th:href="@{/subject/add}">Add Subject</a>
+    </div>
+
     <div class="ui attached segment">
-        <table th:fragment="bookList" class="ui very basic celled table">
+        <table class="ui very basic celled table">
             <thead>
             <tr>
                 <th>Number</th>
@@ -77,8 +81,8 @@
             <tr>
                 <th colspan="4" class="right aligned row">
                     <div class="ui mini pagination menu m-margin-top">
-                        <a class="icon item">上一页</a>
-                        <a  class="icon item">下一页</a>
+                        <a th:href="@{/subject/list(page=${page.number}-1)}" th:unless="${page.first}" class="icon item">上一页</a>
+                        <a th:href="@{/subject/list(page=${page.number}+1)}" th:unless="${page.last}" class="icon item">下一页</a>
                     </div>
                 </th>
             </tr>
