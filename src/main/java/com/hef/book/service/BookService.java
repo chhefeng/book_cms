@@ -12,11 +12,11 @@ public interface BookService {
 
     Page<Book> findAll(Pageable pageable);
 
-    Book saveBook(Book book);
+    Book save(Book book);
 
-    Book updateBook(Book book);
+    Book update(Book book);
 
-    void deleteBook(Long id);
+    void delete(Long id);
 
 
 }

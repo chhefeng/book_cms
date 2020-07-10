@@ -51,11 +51,14 @@
         <h3 th:text="${message}"></h3>
     </div>
 
-    <div class="ui small fluid button m-padded-lr-tiny">
-        <i class="add icon"></i><a th:href="@{/subject/add}">Add Subject</a>
-    </div>
 
     <div class="ui attached segment">
+        <div class="ui right aligned container">
+            <a class="ui blue button" th:href="@{/subject/add}">
+                <i class="add icon"></i>Add Subject
+            </a>
+        </div>
+
         <table class="ui very basic celled table">
             <thead>
             <tr>
@@ -69,8 +72,8 @@
                 <td th:text="${iterStat.count}">1</td>
                 <td th:text="${subject.name}">Finite Elmente Methode:Linar dynamics and statics</td>
                 <td >
-                    <a th:href="@{/subject/{id}/edit(id=${subject.id})}" class="ui blue button">Edit</a>
-                    <a th:href="@{/subject/{id}/delete(id=${subject.id})}" class="ui blue button">Delete</a>
+                    <a th:href="@{/subject/{id}/edit(id=${subject.id})}" class="ui blue compact button">Edit</a>
+                    <a th:href="@{/subject/{id}/delete(id=${subject.id})}" class="ui blue compact button">Delete</a>
                 </td>
 
             </tr>

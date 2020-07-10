@@ -45,13 +45,18 @@
 
 
 <div class="ui m-container-tiny">
+
+    <div class="ui message" th:unless="${#strings.isEmpty(message)}">
+        <h3 th:text="${message}"></h3>
+    </div>
+
     <div class="ui attached segment">
 
-
-        <div class="ui message" th:unless="${#strings.isEmpty(message)}">
-            <h3 th:text="${message}"></h3>
+        <div class="ui right aligned container">
+            <a class="ui blue button" th:href="@{/subject/add}">
+                <i class="add icon"></i>Add Tag
+            </a>
         </div>
-
 
         <table th:fragment="bookList" class="ui very basic celled table">
             <thead>
@@ -66,8 +71,8 @@
                 <td th:text="${iterStat.count}">1</td>
                 <td th:text="${tag.name}">Finite Elmente Methode:Linar dynamics and statics</td>
                 <td >
-                    <a th:href="@{/tag/{id}/edit(id=${tag.id})}" class="ui blue button">Edit</a>
-                    <a th:href="@{/tag/{id}/delete(id=${tag.id})}" class="ui blue button">Delete</a>
+                    <a th:href="@{/tag/{id}/edit(id=${tag.id})}" class="ui blue compact button">Edit</a>
+                    <a th:href="@{/tag/{id}/delete(id=${tag.id})}" class="ui blue compact button">Delete</a>
                 </td>
 
             </tr>

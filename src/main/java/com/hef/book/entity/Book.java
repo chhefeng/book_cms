@@ -46,8 +46,8 @@ public class Book {
     @ManyToMany
     private List<Tag> tags = new ArrayList<>();
 
-    public void init() {
 
+    public void init() {
         if(!authors.isEmpty()){
             StringBuilder sb = new StringBuilder();
             for (Tag tag : tags) {
@@ -71,12 +71,6 @@ public class Book {
         }
 
     }
-
-
-    //1,2,3
-
-
-
 
 
 

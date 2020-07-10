@@ -34,20 +34,21 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional
-    public Book saveBook(Book book) {
+    public Book save(Book book) {
         return bookRepository.save(book);
     }
 
     @Override
     @Transactional
-    public Book updateBook(Book book) {
+    public Book update(Book book) {
         Book bookOld = bookRepository.findById(book.getId()).get();
         BeanUtils.copyProperties(book, bookOld);
         return bookRepository.save(bookOld);
     }
 
     @Override
-    public void deleteBook(Long id) {
+    public void delete(Long id) {
+        bookRepository.deleteById(id);
     }
 
 }

@@ -7,8 +7,7 @@ import com.hef.book.service.BookService;
 import com.hef.book.service.SubjectService;
 import com.hef.book.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -24,14 +23,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/book")
 public class BookController {
-
-    private static final String PATH_LIST = "/book/list";
-    private static final String PATH_SEARCH = "/book/search";
-    private static final String PATH_ADD = "/book/add";
-
-    private static final String RESOURCE_LIST = "index";
-    private static final String RESOURCE_ADD = "form-book";
-    private static final String REDIRECT_LIST = "redirect:/book/list";
 
     private BookService bookService;
     private TagService tagService;
@@ -52,8 +43,9 @@ public class BookController {
      * @param model
      * @return
      */
-    @GetMapping({"/","","/list"})
-    public String list(@PageableDefault(size = 8) Pageable pageable, Model model) {
+    @GetMapping({"/list", ""})
+    public String list(@PageableDefault(size = 8, sort = {"title"}, direction = Sort.Direction.DESC)
+                                   Pageable pageable, Model model) {
         model.addAttribute("subject", subjectService.findAll());
         model.addAttribute("page", bookService.findAll(pageable));
         return "books";
@@ -79,7 +71,7 @@ public class BookController {
         model.addAttribute("authors", authorService.findAll());
         model.addAttribute("tags", tagService.findAll());
         model.addAttribute("subjects", subjectService.findAll());
-        return "form-book";
+        return "book-form";
     }
 
     /**
@@ -93,7 +85,7 @@ public class BookController {
         model.addAttribute("authors", authorService.findAll());
         model.addAttribute("tags", tagService.findAll());
         model.addAttribute("subjects", subjectService.findAll());
-        return "form-book";
+        return "book-form";
     }
 
 
@@ -124,11 +116,11 @@ public class BookController {
 
         Book bookNew;
         if (book.getId() == null) {
-            bookNew = bookService.saveBook(book);
+            bookNew = bookService.save(book);
         } else {
-            bookNew = bookService.updateBook(book);
+            bookNew = bookService.update(book);
         }
-        return REDIRECT_LIST;
+        return "redirect:/book/list";
     }
 
     /**
@@ -141,7 +133,14 @@ public class BookController {
     @PostMapping("/search")
     public String search(@PageableDefault(size = 8) Pageable pageable, Book book, Model model) {
         // code goes here
-        return "index";
+        return "books";
+    }
+
+    @GetMapping("/{id}/delete")
+    public String delete(@PathVariable Long id, RedirectAttributes red){
+        bookService.delete(id);
+        red.addFlashAttribute("message", "delete successful");
+        return "redirect:/book/list";
     }
 
 
