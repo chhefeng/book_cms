@@ -39,18 +39,15 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public Tag saveTag(Tag tag) {
+    public Tag save(Tag tag) {
         return tagRepository.save(tag);
     }
 
     @Override
-    public Tag updateTag(Long id, Tag tag) {
-        Tag tag1 = tagRepository.getOne(id);
-        if (tag1 == null) {
-            throw new NotFoundException("The tag does not exist");
-        }
-        BeanUtils.copyProperties(tag, tag1);
-        return tagRepository.save(tag1);
+    public Tag update(Tag tag) {
+        Tag tagOld = tagRepository.getOne(tag.getId());
+        BeanUtils.copyProperties(tag, tagOld);
+        return tagRepository.save(tagOld);
     }
 
     @Override
@@ -59,7 +56,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public List<Tag> findTags(String ids) {
+    public List<Tag> findAndSaveTags(String ids) {
         return tagRepository.findAllById(convertToList(ids));
     }
 
@@ -73,7 +70,7 @@ public class TagServiceImpl implements TagService {
                 } else {
                     Tag tag = new Tag();
                     tag.setName(s);
-                    tag = this.saveTag(tag);
+                    tag = this.save(tag);
                     list.add(tag.getId());
                 }
             }

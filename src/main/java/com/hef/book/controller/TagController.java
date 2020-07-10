@@ -44,8 +44,7 @@ public class TagController {
         } else {
             tagService.update(tag);
         }
-        return "redirect:/subject/list";
-
+        return "redirect:/tag/list";
     }
 
 

@@ -1,9 +1,6 @@
 package com.hef.book.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,6 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
+@AllArgsConstructor
 public class Book {
     @Id
     @GeneratedValue
@@ -26,17 +24,21 @@ public class Book {
     private String Subtitle;
     private String picture;
     private String isbn;
+    @ToString.Exclude
     @Basic(fetch = FetchType.LAZY)
     @Lob
     private String description;
     private String published;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST})
+    @ToString.Exclude
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE , CascadeType.REFRESH})
     private List<Author> authors = new ArrayList<>();
 
+    @ToString.Exclude
     @ManyToOne
     private Subject subject;
 
+    @ToString.Exclude
     @ManyToMany
     private List<Tag> tags = new ArrayList<>();
 

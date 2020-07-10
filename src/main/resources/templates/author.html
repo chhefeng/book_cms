@@ -44,14 +44,15 @@
 <br>
 
 
-
 <div class="ui m-container-tiny">
-
-    <div class="ui message" th:unless="${#strings.isEmpty(message)}">
-        <h3 th:text="${message}"></h3>
-    </div>
-
     <div class="ui attached segment">
+
+
+        <div class="ui message" th:unless="${#strings.isEmpty(message)}">
+            <h3 th:text="${message}"></h3>
+        </div>
+
+
         <table th:fragment="bookList" class="ui very basic celled table">
             <thead>
             <tr>
@@ -61,12 +62,12 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="subject, iterStat: ${page.content}">
+            <tr th:each="author, iterStat: ${page.content}">
                 <td th:text="${iterStat.count}">1</td>
-                <td th:text="${subject.name}">Finite Elmente Methode:Linar dynamics and statics</td>
+                <td><span th:text="${author.lastName}+ ', ' + ${author.firstName}"></span></td>
                 <td >
-                    <a th:href="@{/subject/{id}/edit(id=${subject.id})}" class="ui blue button">Edit</a>
-                    <a th:href="@{/subject/{id}/delete(id=${subject.id})}" class="ui blue button">Delete</a>
+                    <a th:href="@{/author/{id}/edit(id=${author.id})}" class="ui blue button">Edit</a>
+                    <a th:href="@{/author/{id}/delete(id=${author.id})}" class="ui blue button">Delete</a>
                 </td>
 
             </tr>
@@ -77,8 +78,8 @@
             <tr>
                 <th colspan="4" class="right aligned row">
                     <div class="ui mini pagination menu m-margin-top">
-                        <a class="icon item">上一页</a>
-                        <a  class="icon item">下一页</a>
+                        <a th:href="@{/author/list(page=${page.number}-1)}"  th:unless="${page.first}" class="icon item">上一页</a>
+                        <a th:href="@{/author/list(page=${page.number}+1)}"  th:unless="${page.last}" class="icon item">下一页</a>
                     </div>
                 </th>
             </tr>

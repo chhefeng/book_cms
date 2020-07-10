@@ -1,15 +1,15 @@
 package com.hef.book.service.impl;
 
-import com.hef.book.NotFoundException;
 import com.hef.book.dao.SubjectRepository;
-import com.hef.book.entity.Subject;
 import com.hef.book.entity.Subject;
 import com.hef.book.service.SubjectService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -44,9 +44,16 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
+    @Transactional
     public Subject update(Subject subject) {
 
         Subject subjectOld = subjectRepository.getOne(subject.getId());
+        Long id = 28L;
+        Subject subject2 = subjectRepository.getOne(28L);
+        System.out.println(subject2);
+        Subject subject1 =subjectRepository.findById(subject.getId()).get();
+        System.out.println(subjectOld);
+        System.out.println(subject1);
         BeanUtils.copyProperties(subject, subjectOld);
         return subjectRepository.save(subjectOld);
     }

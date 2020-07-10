@@ -1,8 +1,6 @@
 package com.hef.book.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,8 +12,10 @@ import java.util.List;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class Subject {
     @Id
     @GeneratedValue
@@ -23,6 +23,7 @@ public class Subject {
     @NotBlank(message = "name should not be empty")
     private String name;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "subject")
     private List<Book> books = new ArrayList<>();
 

@@ -1,10 +1,8 @@
 package com.hef.book.controller;
 
 
-import com.hef.book.entity.Author;
-import com.hef.book.entity.Book;
-import com.hef.book.entity.Subject;
-import com.hef.book.entity.User;
+import com.hef.book.entity.*;
+import com.hef.book.service.AuthorService;
 import com.hef.book.service.BookService;
 import com.hef.book.service.SubjectService;
 import com.hef.book.service.TagService;
@@ -38,9 +36,11 @@ public class BookController {
     private BookService bookService;
     private TagService tagService;
     private SubjectService subjectService;
+    private AuthorService authorService;
 
     @Autowired
-    public BookController(BookService bookService, TagService tagService, SubjectService subjectService) {
+    public BookController(AuthorService authorService, BookService bookService, TagService tagService, SubjectService subjectService) {
+        this.authorService = authorService;
         this.bookService = bookService;
         this.tagService = tagService;
         this.subjectService = subjectService;
@@ -101,7 +101,6 @@ public class BookController {
      */
     @PostMapping("/add-author")
     public String addAuthors(Book book){
-        //model.addAttribute("authors", authors);
         book.getAuthors().add(new Author());
         return "form-book";
     }
@@ -114,14 +113,18 @@ public class BookController {
      * @return
      */
     @PostMapping("/save-book")
-    public String postForm(Book book, RedirectAttributes attributes, HttpSession session) {
+    public String postForm(@RequestParam String tagIds, Book book, RedirectAttributes attributes, HttpSession session) {
         book.setUser((User) session.getAttribute("user"));
         System.out.println(book);
 
+        List<Tag> tags = tagService.findAndSaveTags(tagIds);
+        book.setTags(tags);
+
+        Book bookNew;
         if (book.getId() == null) {
-            bookService.saveBook(book);
+            bookNew = bookService.saveBook(book);
         } else {
-            bookService.updateBook(book);
+            bookNew = bookService.updateBook(book);
         }
         return REDIRECT_LIST;
     }

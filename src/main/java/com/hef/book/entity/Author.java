@@ -1,9 +1,6 @@
 package com.hef.book.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,7 +10,8 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-
+@ToString
+@AllArgsConstructor
 public class Author {
     @Id
     @GeneratedValue
@@ -22,11 +20,10 @@ public class Author {
     private String firstName;
     private String lastName;
 
+    private String name = firstName + " " + lastName;
+
+    @ToString.Exclude
     @ManyToMany(mappedBy = "authors")
     private List<Book> books = new ArrayList<>();
 
-    @Override
-    public String toString() {
-        return lastName + ',' + firstName + ';';
-    }
 }

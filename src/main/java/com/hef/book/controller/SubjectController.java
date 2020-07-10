@@ -10,6 +10,9 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/subject")
@@ -34,13 +37,17 @@ public class SubjectController {
         return "subject-input";
     }
 
-    @PostMapping("/save")
-    public String save(Subject subject){
-
+    @GetMapping("/save")
+    public String save(Subject subject, RedirectAttributes redirectAttributes){
+        System.out.println(subject);
+        Subject subjectNew;
         if (subject.getId()== null){
-            subjectService.save(subject);
+            subjectNew = subjectService.save(subject);
         } else {
-            subjectService.update(subject);
+            subjectNew = subjectService.update(subject);
+        }
+        if (subjectNew != null){
+            redirectAttributes.addFlashAttribute("message", "successful");
         }
         return "redirect:/subject/list";
 

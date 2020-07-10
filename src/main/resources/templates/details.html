@@ -1,25 +1,18 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head th:replace="_fragments :: head(~{::title})">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
-    <link rel="stylesheet" href="/me.css">
-
     <title>details</title>
-
 </head>
 
 <body>
 
 <!-- navigation -->
-<nav class="ui attached segment m-padded-tb-mini">
+<nav th:replace="_fragments :: menu(1)" class="ui attached segment m-padded-tb-mini">
     <div class="ui m-container">
         <div class="ui secondary menu">
             <div>
                 <h3 class="ui item teal header">PLMS</h3>
             </div>
-
             <div class="ui secondary menu lr-space">
                 <div class="header item">
                     Books
@@ -43,7 +36,6 @@
             </div>
         </div>
     </div>
-
 </nav>
 <br>
 <br>
@@ -101,7 +93,7 @@
                         <td><h5>Subject:</h5></td>
                         <td>
                             <a href="">
-                                <span th:field="*{subject}">Solid Mechanics</span>
+                                <span th:text="*{subject.name}">Solid Mechanics</span>
                             </a>
                         </td>
                     </tr>

@@ -52,6 +52,11 @@
 
 <div class="ui m-container-tiny">
     <div class="ui attached secondary segment">
+
+        <div class="ui message" th:unless="${#strings.isEmpty(message)}">
+            <h3 th:text="${message}"></h3>
+        </div>
+
         <div class="ui container ">
             <div class="ui form">
                 <div class="inline fields m-margin-bottom-mini">
@@ -84,6 +89,7 @@
     </div>
 
     <div class="ui attached segment">
+
         <table th:fragment="bookList" class="ui very basic celled table">
             <thead>
             <tr>
@@ -106,7 +112,7 @@
                 <td th:text="${book.subject.name}" data-label="Job">dynamics and statics</td>
                 <td th:text="${book.isbn}" data-label="Job">dynamics and statics</td>
             </tr>
-            <tr>
+   <!--         <tr>
                 <td data-label="Name">Jill</td>
                 <td data-label="Age">26</td>
                 <td data-label="Job">Engineer</td>
@@ -117,7 +123,7 @@
                 <td data-label="Age">24</td>
                 <td data-label="Job">Designer</td>
                 <td data-label="Job">Engineer</td>
-            </tr>
+            </tr>-->
             </tbody>
             <tfoot>
             <tr>

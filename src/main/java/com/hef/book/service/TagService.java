@@ -14,13 +14,13 @@ public interface TagService {
 
     Page<Tag> findAll(Pageable pageable);
 
-    Tag saveTag(Tag tag);
+    Tag save(Tag tag);
 
-    Tag updateTag(Long id, Tag tag);
+    Tag update(Tag tag);
 
     void deleteTag(Long id);
 
     // methods
-    List<Tag> findTags(String ids);
+    List<Tag> findAndSaveTags(String ids);
 
 }

@@ -1,8 +1,6 @@
 package com.hef.book.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,6 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
+@AllArgsConstructor
 public class User {
     @Id
     @GeneratedValue
@@ -24,6 +24,7 @@ public class User {
     private String username;
     private String password;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "user")
     private List<Book> books = new ArrayList<>();
 
