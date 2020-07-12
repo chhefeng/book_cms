@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    # com.mysql.cj.jdbc.Driver 坑
+    # This driver is not in the classpath.
+
+    # com.mysql.jdbc.Driver
+    # Spring auto-detects the driver based on the JDBC URL. This one.
+    # Explicitly setting the driver that is in the class path.
+
+    url: jdbc:mysql://mysql-test:3306/book?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
+    username: hefeng
+    password: hefeng
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+
+
+
+
+
+

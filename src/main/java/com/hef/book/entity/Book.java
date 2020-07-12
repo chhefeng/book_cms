@@ -47,6 +47,7 @@ public class Book {
     private List<Tag> tags = new ArrayList<>();
 
 
+
     public void init() {
         if(!authors.isEmpty()){
             StringBuilder sb = new StringBuilder();
@@ -69,6 +70,9 @@ public class Book {
             this.authorIds = sb.toString();
             System.out.println(authorIds);
         }
+
+        List<Integer> longList = new ArrayList<>();
+        longList.add(1);
 
     }
 
