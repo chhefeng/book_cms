@@ -42,6 +42,14 @@ public class Book {
     @ManyToOne
     private Subject subject;
 
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+    }
+
     @ToString.Exclude
     @ManyToMany
     private List<Tag> tags = new ArrayList<>();
