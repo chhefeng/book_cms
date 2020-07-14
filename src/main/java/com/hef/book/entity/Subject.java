@@ -28,12 +28,5 @@ public class Subject {
     @OneToMany(mappedBy = "subject")
     private List<Book> books = new ArrayList<>();
 
-    public Collection<Book> getBooks() {
-        return books;
-    }
-
-    public void setBooks(Collection<Book> books) {
-        this.books = books;
-    }
 
 }

@@ -22,5 +22,5 @@ public interface BookService {
 
     Page<Book> listBook(Long tagId, Pageable pageable);
 
-    Page<Book> listBook(Pageable pageable, BookQuery book);
+    Page<Book> listBook(String query, Pageable pageable);
 }

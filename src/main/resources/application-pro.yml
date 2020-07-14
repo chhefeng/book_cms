@@ -13,7 +13,7 @@ logging:
   level:
     root: warn
     com.hef.blog: info
-  file: log/blog-pro.log
+  file: log/book-pro.log
 server:
   port: 8081
 

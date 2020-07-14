@@ -70,22 +70,23 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Page<Book> listBook(Pageable pageable, BookQuery book) {
-        return bookRepository.findAll(new Specification<Book>() {
-            @Override
-            public Predicate toPredicate(Root<Book> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
-                List<Predicate> predicates = new ArrayList<>();
-                if (!"".equals(book.getTitle()) && book.getTitle() != null) {
-                    predicates.add(cb.like(root.<String>get("title"), "%"+book.getTitle()+"%"));
-                }
-                if (book.getSubjectId() != null) {
-                    predicates.add(cb.equal(root.<Subject>get("type").get("id"), book.getSubjectId()));
-                }
+    public Page<Book> listBook(String query, Pageable pageable) {
+        Specification<Book> spec = (root, cq, cb) ->
+        {
+            List<Predicate> predicates = new ArrayList<>();
 
-                cq.where(predicates.toArray(new Predicate[predicates.size()]));
-                return null;
+            if (!"".equals(query)){
+                predicates.add(cb.like(root.get("title"), "%"+query+"%"));
+                predicates.add(cb.like(root.get("isbn"), "%"+query+"%"));
+                Join join = root.join("authors");
+                predicates.add(cb.like(join.get("name"),"%"+query+"%"));
             }
-        },pageable);
+            cq.distinct(true); // important!
+
+            return cb.or(predicates.toArray(new Predicate[predicates.size()]));
+        };
+
+        return bookRepository.findAll(spec, pageable);
     }
 
 }

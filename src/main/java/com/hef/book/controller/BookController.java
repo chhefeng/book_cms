@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -126,13 +125,15 @@ public class BookController {
     /**
      * search book
      * @param pageable
-     * @param book
+     * @param query
      * @param model
      * @return
      */
     @PostMapping("/search")
-    public String search(@PageableDefault(size = 8) Pageable pageable, Book book, Model model) {
-        // code goes here
+    public String search(@PageableDefault(size = 4) Pageable pageable,
+                         @RequestParam String query, Model model) {
+        model.addAttribute("page", bookService.listBook(query, pageable));
+        model.addAttribute("query", query);
         return "books";
     }
 

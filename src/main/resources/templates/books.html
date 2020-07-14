@@ -61,11 +61,12 @@
             <div class="ui form">
                 <div class="inline fields m-margin-bottom-mini">
                     <div class="seven wide field">
-                        <div class="ui icon small input">
-                            <input type="text" placeholder="Title, Auther, or ISBN">
-                            <i class="search link icon"></i>
-                        </div>
-
+                        <form name="search" action="#" th:action="@{/book/search}" method="POST" style="width: 100%">
+                            <div class="ui icon small input">
+                                <input name="query" type="text" th:value="${query}" placeholder="Title, Auther, or ISBN">
+                                <i onclick="document.forms['search'].submit()" class="search link icon"></i>
+                            </div>
+                        </form>
                     </div>
                     <div class="six wide field">
                         <div class="ui icon small input">

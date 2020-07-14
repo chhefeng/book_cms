@@ -13,7 +13,7 @@ logging:
   level:
     root: info
     com.hef.blog: debug
-  file: log/blog-dev.log
+  file: log/book-dev.log
 
 
 

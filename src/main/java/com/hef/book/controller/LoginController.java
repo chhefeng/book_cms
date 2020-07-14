@@ -37,7 +37,7 @@ public class LoginController {
         if(user != null){
             user.setPassword(null);
             session.setAttribute("user", user);
-            return "index";
+            return "success";
         } else {
             attributes.addFlashAttribute("message", "username or password is invalid");
             return "redirect:/login";
