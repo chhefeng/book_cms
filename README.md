@@ -15,7 +15,7 @@ $ java -jar target/book-0.0.1-SNAPSHOT.jar
 Default configuration file use H2 as database. When the app run successfully, you can access the database via http://localhost:8080/h2 and connect it using the following 
 ```
 username: root
-password: root
+password: 123456
 ```
 A default account is also stored in the H2 database to login the app. 
 ```
